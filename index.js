@@ -4,7 +4,8 @@ let currDeg = 0,
 let x = RADIUS + 110,
   y = 0;
 let tiles = [];
-let stepSize = 10;
+let stepSize = 1,
+  stepSizeincrementer = 0;
 const waveSegment = (xLast, yLast, x, y) => {
   (this.x = x), (this.y = y), (this.xLast = xLast), (this.yLast = yLast);
   return {
@@ -37,7 +38,7 @@ function setup() {
   //   }
   // }
   tiles.push({ draw: drawTile(width / 2, height / 2) });
-  for (let i = 0; i < 360; i += 60) {
+  for (let i = 0; i < 360; i += 30) {
     x = cos(radians(i)) * RADIUS + width / 2;
     y = sin(radians(i)) * RADIUS + height / 2;
     tiles.push({ draw: drawTile(x, y) });
@@ -48,7 +49,11 @@ function draw() {
   background(0);
   lastDeg = currDeg;
   currDeg += stepSize;
-  stepSize += 0.05;
+  stepSize += 0.5;
+  // stepSize += stepSizeincrementer;
+  // stepSizeincrementer > 0.1
+  //   ? (stepSizeincrementer -= 0.01)
+  //   : (stepSizeincrementer += 0.01);
   x = RADIUS * cos(radians(currDeg));
   y = RADIUS * sin(radians(currDeg));
   xLast = RADIUS * cos(radians(lastDeg));
