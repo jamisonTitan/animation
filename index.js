@@ -1,4 +1,4 @@
-const RADIUS = 100;
+const RADIUS = 200;
 let currDeg = 0,
   lastDeg = 0;
 let x = RADIUS + 110,
@@ -20,23 +20,27 @@ const waveSegment = (xLast, yLast, x, y) => {
 };
 const drawTile = (xoff, yoff) => (xLast, yLast, x, y) => {
   noFill();
-  //currWaveSegment = waveSegment(xLast + xoff, yLast + yoff, x + xoff, y + yoff);
-  //currWaveSegment.draw();
+  stroke(20, 20, 30);
+  ellipse(xoff, yoff, RADIUS * 2);
   stroke(255, 255, 255);
   line(xLast + xoff, yLast + yoff, x + xoff, y + yoff);
   stroke(255, 0, 0);
   strokeWeight(5);
   line(xoff, yoff, x + xoff, y + yoff);
-  stroke(100, 100, 100);
-  //ellipse(xoff, yoff, 200);
 };
 function setup() {
-  cnv = createCanvas(800, 800);
+  cnv = createCanvas(900, 900);
   background(0);
-  for (i = RADIUS; i < width; i += RADIUS) {
-    for (j = RADIUS; j < height; j += RADIUS) {
-      tiles.push({ draw: drawTile(i, j) });
-    }
+  // for (i = RADIUS; i < width; i += RADIUS) {
+  //   for (j = RADIUS; j < height; j += RADIUS) {
+  //     tiles.push({ draw: drawTile(i, j) });
+  //   }
+  // }
+  tiles.push({ draw: drawTile(width / 2, height / 2) });
+  for (let i = 0; i < 360; i += 60) {
+    x = cos(radians(i)) * RADIUS + width / 2;
+    y = sin(radians(i)) * RADIUS + height / 2;
+    tiles.push({ draw: drawTile(x, y) });
   }
 }
 
